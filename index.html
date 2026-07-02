@@ -70,23 +70,29 @@
     padding:4px 0 0;
     margin-bottom:6px;
   }
-  .brand-occhio{
-    font-family:"Lexend", sans-serif;
-    font-weight:500;
-    font-size:.72rem;
-    letter-spacing:.36em;
-    text-transform:uppercase;
-    color:var(--oro);
-    margin-bottom:3px;
-    padding-left:.36em; /* compensa lo spazio finale, centra otticamente */
+  .logo-alone{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:196px; height:196px;
+    margin:0 auto;
   }
-  .brand-nome{
-    font-family:"Lexend", sans-serif;
-    font-weight:700;
-    font-size:1.42rem;
-    letter-spacing:.02em;
-    line-height:1.08;
-    color:var(--blu-scuro);
+  .logo-alone::before{
+    content:"";
+    position:absolute; inset:-26px;
+    border-radius:50%;
+    background:radial-gradient(circle,
+      rgba(255,255,255,.95) 0%,
+      rgba(255,255,255,.75) 42%,
+      rgba(255,253,246,.35) 66%,
+      transparent 75%);
+    pointer-events:none;
+  }
+  .logo-ufficiale{
+    position:relative;
+    width:170px; height:170px;
+    filter:drop-shadow(0 4px 10px rgba(22,64,85,.10));
   }
   .brand-filo{
     position:relative;
@@ -454,8 +460,8 @@
     .tappa{padding-left:42px;}
     .percorso::before{left:13px;}
     .tappa::before{left:6px;}
-    .brand-nome{font-size:1.24rem;}
-    .brand-occhio{letter-spacing:.28em;}
+    .logo-alone{width:160px;height:160px;}
+    .logo-ufficiale{width:140px;height:140px;}
   }
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto;}
@@ -473,8 +479,9 @@
   <!-- MODULO -->
   <div id="modulo">
     <header class="brandbar">
-      <div class="brand-occhio">Scuola</div>
-      <div class="brand-nome">Sacra Famiglia</div>
+      <div class="logo-alone">
+        <img class="logo-ufficiale" src="logo-trasparente.png" alt="Scuola Sacra Famiglia" width="640" height="641" />
+      </div>
       <div class="brand-filo" aria-hidden="true"></div>
       <div class="anno">Anno scolastico 2025 / 2026</div>
     </header>

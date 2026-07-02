@@ -12,9 +12,16 @@
   }
   *{box-sizing:border-box;}
   body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;max-width:960px;margin:0 auto;padding:28px 20px 90px;color:var(--inchiostro);line-height:1.6;background:var(--carta);}
-  .brand-logo{display:block;height:60px;width:auto;}
-  h1{font-size:1.55rem;color:var(--blu-scuro);margin:14px 0 4px;}
-  .occhiello{color:var(--tenue);font-size:.95rem;margin:0 0 20px;}
+  .brand-testa{display:flex;align-items:center;gap:18px;margin-bottom:20px;}
+  .logo-alone{position:relative;flex:0 0 auto;display:flex;align-items:center;justify-content:center;width:104px;height:104px;}
+  .logo-alone::before{content:"";position:absolute;inset:-12px;border-radius:50%;pointer-events:none;
+    background:radial-gradient(circle, rgba(255,255,255,.95) 0%, rgba(255,255,255,.7) 45%, rgba(255,253,246,.3) 68%, transparent 76%);}
+  .brand-logo{position:relative;display:block;width:92px;height:auto;filter:drop-shadow(0 3px 8px rgba(22,64,85,.10));}
+  h1{font-size:1.55rem;color:var(--blu-scuro);margin:0 0 4px;}
+  .occhiello{color:var(--tenue);font-size:.95rem;margin:0;}
+  @media (max-width:560px){
+    .brand-testa{flex-direction:column;text-align:center;gap:8px;}
+  }
   p{margin:.5em 0;}
 
   /* --- Accesso --- */
@@ -67,7 +74,7 @@
   @media print{
     @page{margin:15mm;}
     body{background:#fff;color:#000;max-width:none;margin:0;padding:0;}
-    .brand-logo,.occhiello,h1,.accesso,.config,.barra,.azioni-top,.conteggio,.vuoto{display:none !important;}
+    .brand-testa,.accesso,.config,.barra,.azioni-top,.conteggio,.vuoto{display:none !important;}
     .stampa-intestazione{display:block !important;margin-bottom:18px;border-bottom:2px solid #B8860B;padding-bottom:10px;}
     .pt-logo{height:52px;width:auto;display:block;margin-bottom:8px;}
     .pt-titolo{font-family:"Lexend",sans-serif;font-size:1.25rem;color:#164055;margin:0;}
@@ -81,10 +88,15 @@
 </style>
 </head>
 <body>
-  <img class="brand-logo" src="logo.jpg" alt="Scuola Sacra Famiglia" />
-
-  <h1>Cruscotto del Dirigente</h1>
-  <p class="occhiello">La strada e i pesi — le relazioni dei docenti, leggibili solo da te.</p>
+  <header class="brand-testa">
+    <div class="logo-alone">
+      <img class="brand-logo" src="logo-trasparente.png" alt="Scuola Sacra Famiglia" width="640" height="641" />
+    </div>
+    <div>
+      <h1>Cruscotto del Dirigente</h1>
+      <p class="occhiello">La strada e i pesi — le relazioni dei docenti, leggibili solo da te.</p>
+    </div>
+  </header>
 
   <!-- ACCESSO -->
   <div class="accesso" id="accesso">
@@ -376,7 +388,7 @@
     if(filtri.length) meta += " · " + filtri.join(" · ");
     const testa = document.getElementById("stampaIntestazione");
     testa.innerHTML =
-      '<img class="pt-logo" src="logo.jpg" alt="Scuola Sacra Famiglia" />' +
+      '<img class="pt-logo" src="logo-trasparente.png" alt="Scuola Sacra Famiglia" />' +
       '<p class="pt-titolo">La strada e i pesi — Relazioni dei docenti</p>' +
       '<p class="pt-meta">' + esc(meta) + '</p>';
     window.print();
