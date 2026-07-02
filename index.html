@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover" />
+<title>Come mi presento — Scuola Sacra Famiglia</title>
+<link rel="icon" href="logo.jpg" />
+<link rel="apple-touch-icon" href="logo.jpg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Lexend:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --carta:#faf7f1;
+    --inchiostro:#2a2f38;
+    --inchiostro-tenue:#5b6472;
+    --blu:#1f5673;      /* blu istituzionale calmo, non quello della Sacra Famiglia */
+    --blu-scuro:#164055;
+    --oro:#B8860B;      /* accento caldo, mai il rosso */
+    --bordo:#e4ddd0;
+    --bordo-focus:#1f5673;
+    --carta-campo:#ffffff;
+    --ombra:0 1px 2px rgba(22,64,85,.06), 0 8px 24px rgba(22,64,85,.06);
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--carta);
+    color:var(--inchiostro);
+    font-family:"Atkinson Hyperlegible", system-ui, sans-serif;
+    font-size:19px;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{
+    max-width:720px;
+    margin:0 auto;
+    padding:32px 22px 96px;
+  }
+  header.intestazione{
+    text-align:center;
+    padding:14px 0 6px;
+  }
+  .brand{
+    display:inline-flex;
+    align-items:center;
+    gap:11px;
+  }
+  .brand-mark{
+    width:40px;
+    height:40px;
+    flex:0 0 auto;
+    filter:drop-shadow(0 4px 12px rgba(22,64,85,.20));
+  }
+  .brand-name{
+    font-family:"Lexend", sans-serif;
+    font-weight:600;
+    color:var(--blu-scuro);
+    font-size:.95rem;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    line-height:1.2;
+  }
+  .anno{color:var(--inchiostro-tenue); font-size:.78rem; margin-top:2px;}
+  h1{
+    font-family:"Lexend", sans-serif;
+    font-weight:600;
+    color:var(--inchiostro);
+    font-size:2.05rem;
+    line-height:1.2;
+    margin:26px 0 6px;
+    text-align:center;
+  }
+  .sottotitolo{
+    text-align:center;
+    color:var(--inchiostro-tenue);
+    font-size:1.02rem;
+    margin:0 0 26px;
+  }
+  blockquote.sherpa{
+    margin:0 0 26px;
+    padding:20px 24px;
+    background:#fff;
+    border-left:4px solid var(--oro);
+    border-radius:10px;
+    box-shadow:var(--ombra);
+    font-style:italic;
+    color:var(--blu-scuro);
+    font-size:1.08rem;
+    line-height:1.6;
+  }
+  blockquote.sherpa .fonte{
+    display:block;
+    font-style:normal;
+    font-size:.85rem;
+    color:var(--inchiostro-tenue);
+    margin-top:10px;
+    letter-spacing:.02em;
+  }
+  .consegna{
+    background:#fffdf8;
+    border:1px solid var(--bordo);
+    border-radius:12px;
+    padding:20px 22px;
+    margin-bottom:34px;
+  }
+  .consegna p{margin:0 0 12px;}
+  .consegna p:last-child{margin-bottom:0;}
+  .consegna strong{color:var(--blu-scuro);}
+  .patto{
+    margin-top:14px;
+    padding-top:14px;
+    border-top:1px dashed var(--bordo);
+    font-size:.92rem;
+    color:var(--inchiostro-tenue);
+  }
+
+  .anagrafica{
+    display:flex;
+    flex-wrap:wrap;
+    gap:16px;
+    margin-bottom:36px;
+  }
+  .campo-anag{flex:1 1 220px; min-width:200px;}
+  label{
+    display:block;
+    font-family:"Lexend", sans-serif;
+    font-weight:500;
+    font-size:.9rem;
+    color:var(--blu-scuro);
+    margin-bottom:8px;
+  }
+  input[type=text], select{
+    width:100%;
+    font-family:inherit;
+    font-size:1.05rem;
+    padding:13px 14px;
+    border:1px solid var(--bordo);
+    border-radius:10px;
+    background:var(--carta-campo);
+    color:var(--inchiostro);
+  }
+  input[type=text]:focus, select:focus, textarea:focus{
+    outline:none;
+    border-color:var(--bordo-focus);
+    box-shadow:0 0 0 3px rgba(31,86,115,.15);
+  }
+
+  section.scena{margin-bottom:38px;}
+  .occhiello{
+    font-family:"Lexend", sans-serif;
+    font-weight:600;
+    font-size:.74rem;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    color:var(--oro);
+    margin-bottom:8px;
+  }
+  .domanda{
+    font-family:"Lexend", sans-serif;
+    font-weight:500;
+    font-size:1.18rem;
+    line-height:1.4;
+    color:var(--inchiostro);
+    margin:0 0 6px;
+  }
+  .aiuto{
+    font-size:.96rem;
+    color:var(--inchiostro-tenue);
+    margin:0 0 14px;
+  }
+  textarea{
+    width:100%;
+    min-height:150px;
+    font-family:inherit;
+    font-size:1.05rem;
+    line-height:1.7;
+    padding:16px 16px;
+    border:1px solid var(--bordo);
+    border-radius:12px;
+    background:var(--carta-campo);
+    color:var(--inchiostro);
+    resize:none;
+    overflow:hidden;
+    box-shadow:var(--ombra);
+  }
+  textarea::placeholder{color:#b3aa99;}
+
+  .chiusura{
+    background:#f4f1ea;
+    border-radius:14px;
+    padding:24px 22px 8px;
+    margin-bottom:34px;
+  }
+  .chiusura .domanda{font-size:1.12rem;}
+
+  .chiude-cerchio{
+    text-align:center;
+    font-style:italic;
+    color:var(--blu-scuro);
+    font-size:1.02rem;
+    line-height:1.6;
+    max-width:560px;
+    margin:0 auto 26px;
+  }
+  .barra-invio{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:12px;
+  }
+  button.invia{
+    font-family:"Lexend", sans-serif;
+    font-weight:600;
+    font-size:1.12rem;
+    color:#fff;
+    background:var(--blu);
+    border:none;
+    border-radius:12px;
+    padding:17px 40px;
+    min-height:56px;
+    cursor:pointer;
+    box-shadow:var(--ombra);
+    transition:background .15s ease;
+  }
+  button.invia:hover{background:var(--blu-scuro);}
+  button.invia:active{transform:translateY(1px);}
+  .salvataggio{
+    font-size:.85rem;
+    color:var(--inchiostro-tenue);
+    min-height:1.2em;
+    text-align:center;
+  }
+  .errore{
+    color:var(--oro);
+    font-weight:700;
+    font-size:.92rem;
+    text-align:center;
+    min-height:1.2em;
+  }
+
+  /* Schermata di conferma */
+  .conferma{
+    display:none;
+    text-align:center;
+    padding:60px 20px;
+  }
+  .conferma.attiva{display:block;}
+  .conferma h2{
+    font-family:"Lexend", sans-serif;
+    font-weight:600;
+    color:var(--blu-scuro);
+    font-size:1.7rem;
+    margin:0 0 14px;
+  }
+  .conferma p{color:var(--inchiostro-tenue); font-size:1.05rem; max-width:460px; margin:0 auto 10px;}
+  .segno{
+    width:64px;height:64px;margin:0 auto 22px;
+    border-radius:50%;
+    background:#fff;
+    border:3px solid var(--oro);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .segno svg{width:32px;height:32px;}
+
+  @media (max-width:600px){
+    body{font-size:18px;}
+    h1{font-size:1.7rem;}
+    .wrap{padding:24px 16px 80px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- MODULO -->
+  <div id="modulo">
+    <header class="intestazione">
+      <div class="brand">
+        <svg class="brand-mark" viewBox="0 0 48 48" role="img" aria-label="Scuola Sacra Famiglia">
+          <rect x="3" y="3" width="42" height="42" rx="12" fill="var(--blu, #1f5673)"/>
+          <path d="M24 11 C24 11 34 24 34 31 a10 10 0 0 1 -20 0 C14 24 24 11 24 11 Z" fill="#fff"/>
+          <circle cx="20.4" cy="30.2" r="2.5" fill="var(--oro, #B8860B)"/>
+        </svg>
+        <span class="brand-name">Scuola Sacra Famiglia</span>
+      </div>
+      <div class="anno">Anno scolastico 2025 / 2026</div>
+    </header>
+
+    <h1>La strada e i pesi</h1>
+    <p class="sottotitolo">Come mi presento al nostro Dirigente</p>
+
+    <blockquote class="sherpa">
+      «Sarò come uno sherpa: a volte indico la strada, a volte aiuto a portare i pesi.»
+      <span class="fonte">— le parole con cui il nostro Dirigente si è presentato</span>
+    </blockquote>
+
+    <div class="consegna">
+      <p>Il nuovo Dirigente vuole indicare la strada e aiutare a portare i pesi, ma <strong>non può ancora</strong>: non conosce questo posto. In attesa di potersi incontrare di persona, intanto chiede a ciascuno di presentarsi così. Quella mappa, per ora, ce l'hai tu.</p>
+      <p>Raccontagli com'è <strong>davvero</strong>: scrivi come parleresti, con la lunghezza che senti tua. Di ogni cosa distingui cosa è <strong>già dato</strong> — abitudini, organizzazione, i pesi difficili da muovere da soli — e cosa dipende da <strong>quello che ci metti tu</strong>. Presentarsi non è mettersi in mostra: è dire anche dove si fatica. <strong>Quello che scrivi si salva da solo.</strong></p>
+      <div class="patto">Non è un questionario né una valutazione, non finisce in alcun fascicolo. Ha il tuo nome perché è un incontro, non un voto nascosto — e resta tra te e il Dirigente.</div>
+    </div>
+
+    <div class="anagrafica">
+      <div class="campo-anag">
+        <label for="nome">Il mio nome</label>
+        <input type="text" id="nome" autocomplete="name" placeholder="Nome e cognome" />
+      </div>
+      <div class="campo-anag">
+        <label for="sezione">In quale scuola insegno</label>
+        <select id="sezione">
+          <option value="">— scegli —</option>
+          <option>Nido</option>
+          <option>Infanzia</option>
+          <option>Primaria</option>
+          <option>Secondaria di I grado</option>
+        </select>
+      </div>
+      <div class="campo-anag">
+        <label for="anni">Da quanto tempo insegno qui</label>
+        <select id="anni">
+          <option value="">— scegli —</option>
+          <option>Primo anno</option>
+          <option>2–3 anni</option>
+          <option>4–10 anni</option>
+          <option>Oltre 10 anni</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Le scene: punti di pressione reali, ognuno con le due lenti (strada / pesi) -->
+    <section class="scena">
+      <div class="occhiello">I ragazzi fragili</div>
+      <p class="domanda">Pensa a un bambino che ti ha messo alla prova — per fragilità, comportamento, o una situazione difficile.</p>
+      <p class="aiuto">Cosa hai potuto contare come già dato — sostegni, strumenti, il modo in cui la scuola affronta questi casi — e cosa è dipeso da te, da quello che gli hai messo accanto?</p>
+      <textarea data-key="fragili" placeholder="Scrivi qui…"></textarea>
+    </section>
+
+    <section class="scena">
+      <div class="occhiello">Quando con una famiglia ci si blocca</div>
+      <p class="domanda">Ripensa a una famiglia con cui la collaborazione si è inceppata.</p>
+      <p class="aiuto">Cos'era già stabilito dalla scuola — canali, regole, il sostegno dei colleghi e di chi coordina — e cosa è dipeso da come ti sei posto tu?</p>
+      <textarea data-key="famiglie" placeholder="Scrivi qui…"></textarea>
+    </section>
+
+    <section class="scena">
+      <div class="occhiello">La comunicazione interna</div>
+      <p class="domanda">Come circolano le cose tra colleghi e con chi coordina — quando funziona, e quando si inceppa anche nei disaccordi?</p>
+      <p class="aiuto">Cosa dipende da com'è organizzata — tempi, canali, abitudini — e cosa da quello che ci metti tu: parli diretto, chiedi, porti le questioni in chiaro?</p>
+      <textarea data-key="comunicazione" placeholder="Scrivi qui…"></textarea>
+    </section>
+
+    <section class="scena">
+      <div class="occhiello">Essere visti</div>
+      <p class="domanda">Quando ti sei sentito riconosciuto per il tuo lavoro? E quando hai sentito che nessuno se ne accorgeva?</p>
+      <p class="aiuto">Cosa dipende da come la scuola riconosce l'impegno di ciascuno — e cosa da quanto tu riconosci quello degli altri?</p>
+      <textarea data-key="gratificazione" placeholder="Scrivi qui…"></textarea>
+    </section>
+
+    <div class="chiusura">
+      <div class="occhiello">Per chiudere</div>
+      <p class="domanda">Di tutto quello che hai raccontato: cosa senti fuori dalla tua portata — i pesi da portare insieme — e cosa nelle tue mani, la strada che puoi prendere tu?</p>
+      <textarea data-key="chiusura" placeholder="Scrivi qui…"></textarea>
+    </div>
+
+    <section class="scena">
+      <div class="occhiello">Libero</div>
+      <p class="domanda">C'è qualcos'altro che vuoi dire al nuovo Dirigente per fargli conoscere davvero questo posto?</p>
+      <textarea data-key="libero" placeholder="Scrivi qui… (facoltativo)"></textarea>
+    </section>
+
+    <p class="chiude-cerchio">Quando avrà letto tutte le voci, il Dirigente saprà quali pesi portare con voi e quale strada indicare. La mappa la disegnate voi.</p>
+
+    <div class="barra-invio">
+      <div class="errore" id="errore"></div>
+      <button class="invia" id="invia">Consegna la mia presentazione</button>
+      <div class="salvataggio" id="salvataggio">Il testo si salva da solo su questo dispositivo.</div>
+    </div>
+  </div>
+
+  <!-- CONFERMA -->
+  <div class="conferma" id="conferma">
+    <div class="segno" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#B8860B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg>
+    </div>
+    <h2>Grazie.</h2>
+    <p>La tua presentazione è stata raccolta. Verrà letta con cura e rispetto, per conoscere davvero questo posto e le persone che lo fanno.</p>
+    <p>Puoi chiudere questa pagina.</p>
+  </div>
+
+</div>
+
+<script>
+  const STORAGE_KEY = "presentazione_docenti_v1";
+  // Quando avremo il Web App di Google Apps Script, incolla qui l'URL:
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_dBmwjLI7D4-1ooQx22Wm-gQFNUU2GYpZ0A2eVVb-pXQoXLQVX1oepq6_8ch1UrS8xQ/exec";
+
+  // === Cifratura a busta: AES-256-GCM per il testo, RSA-OAEP per la chiave ===
+  // Incolla qui la chiave PUBBLICA (JWK) generata con "genera-chiavi.html".
+  // È pubblica: si può esporre. La chiave PRIVATA non va MAI messa qui.
+  const PUBLIC_KEY_JWK = {"alg":"RSA-OAEP-256","e":"AQAB","ext":true,"key_ops":["encrypt"],"kty":"RSA","n":"79Gl1rB2rDsUr7zEFfAuW6umx6ynnyFWqQ9Ni01IXgOsvSJ63lFFKUa6aujzeGa91mTXhUrhwk-avAboQW9_oDgDfyW2mOAqs_OGT1upqmtIcYOHMJGNB0BY-ZcdRvrfZOJpIwoicBS-9gnkkRCqSqyi2_f_zuGoaq-ehcbhXXrEXJHBxH8SZACIhtPBYrCOjc4KbxiKTltbxrt1awLrZwRnmToPtLTHNYekjsnWCaSoYNB-01nhhpoh55WQ5H6eojLeiQugOvfMWeGw48wsc26O0dGVAGmJLHyaagrfpM37gaDjkr8ejGx0Oo0yKWYfGCBmn4gtDvCw-zkWIqXMuhhzuxVJ7Huao_2Mq_iKDMtDVdtOvEimQ1doiP3uQNEOfFUstWecVTHWjqb3k6Hag52vHPVlJgcyAOJrEGNsc1F1JADEKTxkn1X1pyPpKlCFClx-6CjiyAhcN_I6744Bbbg_AzbAwcgNQMqSMlG_p2t42TqTEgBS1tH-p4wE0TNVIoBCWdrfGGDDLEcJGnNsFHtbr6SMP-OyT1V_Rn_izlgNkzGGJw02BsiDzBDd0nju9FSZXg9ip8FdtBqxGnM_rlAV-eUT44iGs7w4GH_0ZcQhSU9mUaKVWj58K6AENhiKmAh-JS9Kw8PmtJzYrK-sL9_hjZ1ANcohTHiQPUFxLj0"};
+
+  function bufToB64(buf){
+    let s = "", b = new Uint8Array(buf);
+    for(let i=0;i<b.length;i++) s += String.fromCharCode(b[i]);
+    return btoa(s);
+  }
+
+  async function cifraBusta(oggetto){
+    if(!(window.crypto && crypto.subtle))
+      throw new Error("cifratura non disponibile: apri la pagina via https (o localhost)");
+    const pub = await crypto.subtle.importKey(
+      "jwk", PUBLIC_KEY_JWK, {name:"RSA-OAEP", hash:"SHA-256"}, false, ["encrypt"]);
+    // 1) chiave AES-256 casuale, usa-e-getta
+    const aes = await crypto.subtle.generateKey({name:"AES-GCM", length:256}, true, ["encrypt"]);
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    // 2) cifra il testo con AES-256-GCM
+    const testo = new TextEncoder().encode(JSON.stringify(oggetto));
+    const contenuto = await crypto.subtle.encrypt({name:"AES-GCM", iv}, aes, testo);
+    // 3) cifra la chiave AES con la pubblica RSA-OAEP
+    const rawAes = await crypto.subtle.exportKey("raw", aes);
+    const chiaveCifrata = await crypto.subtle.encrypt({name:"RSA-OAEP"}, pub, rawAes);
+    return {
+      v: "AES-256-GCM+RSA-OAEP",
+      chiave: bufToB64(chiaveCifrata),
+      iv: bufToB64(iv),
+      dati: bufToB64(contenuto),
+      inviatoIl: new Date().toISOString()
+    };
+  }
+
+  const campiTesto = Array.from(document.querySelectorAll("textarea[data-key]"));
+  const nome = document.getElementById("nome");
+  const sezione = document.getElementById("sezione");
+  const anni = document.getElementById("anni");
+  const salvataggio = document.getElementById("salvataggio");
+  const errore = document.getElementById("errore");
+
+  // Aree di testo che crescono con il contenuto
+  function autoCresci(el){
+    el.style.height = "auto";
+    el.style.height = (el.scrollHeight + 4) + "px";
+  }
+
+  // Raccogli tutti i dati
+  function raccogli(){
+    const dati = { nome: nome.value.trim(), sezione: sezione.value, anni: anni.value };
+    campiTesto.forEach(t => dati[t.dataset.key] = t.value);
+    return dati;
+  }
+
+  // Salvataggio automatico locale
+  let timer = null;
+  function salvaLocale(){
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(raccogli()));
+    salvataggio.textContent = "Salvato " + new Date().toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit"});
+  }
+  function programmaSalvataggio(){
+    clearTimeout(timer);
+    timer = setTimeout(salvaLocale, 600);
+  }
+
+  // Ripristina quanto già scritto
+  function ripristina(){
+    const grezzo = localStorage.getItem(STORAGE_KEY);
+    if(!grezzo) return;
+    try{
+      const d = JSON.parse(grezzo);
+      if(d.nome) nome.value = d.nome;
+      if(d.sezione) sezione.value = d.sezione;
+      if(d.anni) anni.value = d.anni;
+      campiTesto.forEach(t => { if(d[t.dataset.key]) t.value = d[t.dataset.key]; });
+    }catch(e){}
+  }
+
+  // Collega gli eventi
+  [nome, sezione, anni, ...campiTesto].forEach(el=>{
+    el.addEventListener("input", programmaSalvataggio);
+  });
+  campiTesto.forEach(t=>{
+    t.addEventListener("input", ()=>autoCresci(t));
+  });
+
+  // Invio
+  document.getElementById("invia").addEventListener("click", async ()=>{
+    errore.textContent = "";
+    const dati = raccogli();
+    const haTesto = campiTesto.some(t => t.value.trim().length > 0);
+    if(!dati.nome){ errore.textContent = "Prima di consegnare, aggiungi il tuo nome."; nome.focus(); return; }
+    if(!haTesto){ errore.textContent = "Racconta almeno qualcosa prima di consegnare."; return; }
+
+    dati.inviatoIl = new Date().toISOString();
+    salvaLocale();
+
+    // Cifra la busta (se è configurata la chiave pubblica)
+    let busta = null;
+    if(PUBLIC_KEY_JWK){
+      try{
+        busta = await cifraBusta(dati);
+      }catch(err){
+        errore.textContent = "Cifratura non riuscita: " + err.message;
+        return;
+      }
+    }
+
+    if(SCRIPT_URL && busta){
+      try{
+        await fetch(SCRIPT_URL, {
+          method:"POST",
+          mode:"no-cors",
+          headers:{ "Content-Type":"text/plain;charset=utf-8" },
+          body: JSON.stringify(busta)
+        });
+      }catch(e){
+        errore.textContent = "Non è stato possibile inviare ora. Il testo resta salvato: riprova più tardi.";
+        return;
+      }
+    }
+
+    // Mostra la conferma
+    document.getElementById("modulo").style.display = "none";
+    document.getElementById("conferma").classList.add("attiva");
+    window.scrollTo({top:0, behavior:"smooth"});
+    localStorage.removeItem(STORAGE_KEY);
+  });
+
+  // Avvio
+  ripristina();
+  campiTesto.forEach(autoCresci);
+</script>
+</body>
+</html>
