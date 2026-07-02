@@ -59,6 +59,25 @@
   .risposta .t{white-space:pre-wrap;}
   .err{color:var(--oro);font-weight:700;margin-top:12px;}
   .vuoto{color:var(--tenue);font-style:italic;}
+
+  /* --- Intestazione di stampa (nascosta a schermo) --- */
+  .stampa-intestazione{display:none;}
+
+  /* --- PDF / Stampa --- */
+  @media print{
+    @page{margin:15mm;}
+    body{background:#fff;color:#000;max-width:none;margin:0;padding:0;}
+    .brand-logo,.occhiello,h1,.accesso,.config,.barra,.azioni-top,.conteggio,.vuoto{display:none !important;}
+    .stampa-intestazione{display:block !important;margin-bottom:18px;border-bottom:2px solid #B8860B;padding-bottom:10px;}
+    .pt-logo{height:52px;width:auto;display:block;margin-bottom:8px;}
+    .pt-titolo{font-family:"Lexend",sans-serif;font-size:1.25rem;color:#164055;margin:0;}
+    .pt-meta{font-size:.82rem;color:#555;margin:3px 0 0;}
+    .esito{margin-top:0;}
+    .scheda{border:1px solid #d8d2c6;border-radius:10px;box-shadow:none;padding:14px 16px;margin-bottom:12px;break-inside:avoid;page-break-inside:avoid;}
+    .risposta{box-shadow:none;break-inside:avoid;page-break-inside:avoid;}
+    .tema-blocco > .titolo{break-after:avoid;page-break-after:avoid;}
+    .voce .t,.risposta .t{color:#1a1a1a;}
+  }
 </style>
 </head>
 <body>
@@ -81,9 +100,13 @@
 
   <div class="config" id="config" hidden></div>
 
+  <!-- Intestazione visibile solo nel PDF/stampa -->
+  <div class="stampa-intestazione" id="stampaIntestazione" aria-hidden="true"></div>
+
   <!-- DASHBOARD -->
   <div class="azioni-top" id="azioniTop">
     <button class="ghost" id="aggiorna">Aggiorna dal foglio</button>
+    <button class="ghost" id="pdf">Esporta PDF</button>
     <button class="link-lieve" id="esci">Esci</button>
   </div>
   <div class="barra" id="barra">
@@ -337,8 +360,31 @@
     }catch(e){ conteggio.textContent = "Aggiornamento non riuscito: " + e.message; }
   }
 
+  function exportaPdf(){
+    if(!privKey || relazioni.length === 0){ return; }
+    const dati = filtrate();
+    const fs = document.getElementById("fSezione").value;
+    const fa = document.getElementById("fAnni").value;
+    const q  = document.getElementById("cerca").value.trim();
+    const filtri = [];
+    if(fs) filtri.push("Scuola: " + fs);
+    if(fa) filtri.push("Anzianità: " + fa);
+    if(q)  filtri.push('Ricerca: “' + q + '”');
+    const vistaTxt = vista === "persona" ? "per docente" : "per tema";
+    const oggi = new Date().toLocaleDateString("it-IT",{day:"2-digit",month:"long",year:"numeric"});
+    let meta = "Scuola Sacra Famiglia · " + oggi + " · " + dati.length + " di " + relazioni.length + " relazioni · vista " + vistaTxt;
+    if(filtri.length) meta += " · " + filtri.join(" · ");
+    const testa = document.getElementById("stampaIntestazione");
+    testa.innerHTML =
+      '<img class="pt-logo" src="logo.jpg" alt="Scuola Sacra Famiglia" />' +
+      '<p class="pt-titolo">La strada e i pesi — Relazioni dei docenti</p>' +
+      '<p class="pt-meta">' + esc(meta) + '</p>';
+    window.print();
+  }
+
   // Eventi
   document.getElementById("entra").addEventListener("click", entra);
+  document.getElementById("pdf").addEventListener("click", exportaPdf);
   document.getElementById("pwd").addEventListener("keydown", (e)=>{ if(e.key === "Enter") entra(); });
   document.getElementById("esci").addEventListener("click", esci);
   document.getElementById("aggiorna").addEventListener("click", aggiorna);
