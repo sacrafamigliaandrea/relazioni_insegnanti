@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cruscotto del Dirigente — La strada e i pesi</title>
+<link rel="icon" href="logo.jpg" />
+<style>
+  :root{
+    --carta:#faf7f1; --blu:#1f5673; --blu-scuro:#164055; --oro:#B8860B;
+    --inchiostro:#2a2f38; --tenue:#6b7482; --bordo:#e4ddd0;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;max-width:960px;margin:0 auto;padding:28px 20px 90px;color:var(--inchiostro);line-height:1.6;background:var(--carta);}
+  .brand-logo{display:block;height:60px;width:auto;}
+  h1{font-size:1.55rem;color:var(--blu-scuro);margin:14px 0 4px;}
+  .occhiello{color:var(--tenue);font-size:.95rem;margin:0 0 20px;}
+  p{margin:.5em 0;}
+
+  /* --- Accesso --- */
+  .accesso{max-width:420px;margin:36px auto 0;background:#fff;border:1px solid var(--bordo);border-radius:14px;padding:26px 26px 30px;text-align:center;box-shadow:0 10px 30px rgba(22,64,85,.06);}
+  .accesso .lucchetto{width:46px;height:46px;margin-bottom:6px;}
+  .accesso h2{font-size:1.1rem;color:var(--blu-scuro);margin:0 0 4px;}
+  .accesso p{font-size:.9rem;color:var(--tenue);margin:0 0 18px;}
+  .accesso input[type=password]{width:100%;font-size:1.05rem;padding:12px 14px;border:1px solid var(--bordo);border-radius:10px;background:#fff;text-align:center;}
+  .accesso button{width:100%;font-size:1.05rem;font-weight:600;color:#fff;background:var(--blu);border:none;border-radius:10px;padding:13px;cursor:pointer;margin-top:14px;}
+  .accesso button:hover{background:var(--blu-scuro);}
+  .accesso button:disabled{opacity:.6;cursor:default;}
+  .msg{margin-top:14px;font-size:.92rem;font-weight:600;color:var(--oro);min-height:1.2em;}
+  .config{max-width:520px;margin:30px auto 0;background:#fffdf8;border-left:4px solid var(--oro);border-radius:8px;padding:16px 20px;font-size:.92rem;}
+  .config code{background:#f0ece3;padding:1px 5px;border-radius:4px;font-size:.9em;}
+
+  /* --- Dashboard --- */
+  .barra{display:none;flex-wrap:wrap;gap:8px;align-items:center;margin:22px 0 8px;padding-bottom:14px;border-bottom:1px solid var(--bordo);}
+  .barra.on{display:flex;}
+  .barra .sep{flex:1 1 auto;}
+  button.ghost{background:transparent;color:var(--blu);border:1px solid var(--bordo);padding:8px 16px;font-size:.9rem;border-radius:10px;cursor:pointer;}
+  button.ghost.on{background:var(--blu);color:#fff;border-color:var(--blu);}
+  button.ghost:hover{border-color:var(--blu);}
+  select,.cerca{font-size:.9rem;padding:8px 10px;border:1px solid var(--bordo);border-radius:8px;background:#fff;color:var(--inchiostro);}
+  .conteggio{font-size:.9rem;color:var(--tenue);margin:6px 0 0;}
+  .azioni-top{display:none;gap:10px;align-items:center;margin-top:6px;}
+  .azioni-top.on{display:flex;}
+  .link-lieve{font-size:.85rem;color:var(--blu);background:none;border:none;cursor:pointer;text-decoration:underline;padding:0;}
+  .esito{margin-top:8px;}
+  .scheda{background:#fff;border:1px solid var(--bordo);border-radius:12px;padding:18px 20px;margin-bottom:16px;}
+  .scheda .testa{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 12px;border-bottom:1px solid var(--bordo);padding-bottom:10px;margin-bottom:12px;}
+  .scheda .chi{font-family:"Lexend",sans-serif;font-weight:600;font-size:1.1rem;color:var(--blu-scuro);}
+  .tag{font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;font-weight:700;color:var(--blu);background:#eef3f6;border-radius:999px;padding:3px 10px;}
+  .tag.oro{color:#8a6608;background:#faf3e0;}
+  .quando{font-size:.8rem;color:var(--tenue);margin-left:auto;}
+  .voce{margin:12px 0;}
+  .voce .k{font-weight:700;color:var(--blu-scuro);font-size:.8rem;text-transform:uppercase;letter-spacing:.03em;}
+  .voce .t{white-space:pre-wrap;margin-top:3px;}
+  .tema-blocco{margin-bottom:26px;}
+  .tema-blocco > .titolo{font-family:"Lexend",sans-serif;font-size:1.15rem;color:var(--blu-scuro);border-bottom:2px solid var(--oro);padding-bottom:6px;margin-bottom:12px;}
+  .risposta{background:#fff;border:1px solid var(--bordo);border-left:3px solid var(--blu);border-radius:8px;padding:12px 16px;margin-bottom:10px;}
+  .risposta .fonte{font-size:.8rem;color:var(--tenue);margin-bottom:4px;font-weight:600;}
+  .risposta .t{white-space:pre-wrap;}
+  .err{color:var(--oro);font-weight:700;margin-top:12px;}
+  .vuoto{color:var(--tenue);font-style:italic;}
+</style>
+</head>
+<body>
+  <img class="brand-logo" src="logo.jpg" alt="Scuola Sacra Famiglia" />
+
+  <h1>Cruscotto del Dirigente</h1>
+  <p class="occhiello">La strada e i pesi — le relazioni dei docenti, leggibili solo da te.</p>
+
+  <!-- ACCESSO -->
+  <div class="accesso" id="accesso">
+    <svg class="lucchetto" viewBox="0 0 24 24" fill="none" stroke="#1f5673" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="4.5" y="10.5" width="15" height="10.5" rx="2.2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/><circle cx="12" cy="15.4" r="1.3" fill="#1f5673" stroke="none"/>
+    </svg>
+    <h2>Accesso riservato</h2>
+    <p>Inserisci la tua password. La decifratura avviene qui, sul tuo dispositivo.</p>
+    <input type="password" id="pwd" placeholder="Password" autocomplete="current-password" />
+    <button id="entra">Entra e leggi le relazioni</button>
+    <div class="msg" id="msg"></div>
+  </div>
+
+  <div class="config" id="config" hidden></div>
+
+  <!-- DASHBOARD -->
+  <div class="azioni-top" id="azioniTop">
+    <button class="ghost" id="aggiorna">Aggiorna dal foglio</button>
+    <button class="link-lieve" id="esci">Esci</button>
+  </div>
+  <div class="barra" id="barra">
+    <button class="ghost on" id="vPersona" data-vista="persona">Per persona</button>
+    <button class="ghost" id="vTema" data-vista="tema">Per tema</button>
+    <span class="sep"></span>
+    <select id="fSezione"><option value="">Tutte le scuole</option></select>
+    <select id="fAnni"><option value="">Tutte le anzianità</option></select>
+    <input type="search" class="cerca" id="cerca" placeholder="Cerca una parola…" />
+  </div>
+  <p class="conteggio" id="conteggio"></p>
+  <div class="esito" id="esito"></div>
+
+<script>
+  // ====== CONFIGURAZIONE (da impostare una volta) ======
+  // 1) URL del Web App (lo stesso di index.html):
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_dBmwjLI7D4-1ooQx22Wm-gQFNUU2GYpZ0A2eVVb-pXQoXLQVX1oepq6_8ch1UrS8xQ/exec";
+  // 2) Token di lettura: lo STESSO valore messo in apps-script.gs (TOKEN_LETTURA):
+  const TOKEN_LETTURA = "YqeMRDD8fqjFrcN7hHPrhq-GxSRgKsAr";
+  // 3) Chiave privata protetta dalla password: incolla il blocco da "genera-chiavi.html":
+  const CHIAVE_PRIVATA_PROTETTA = {"salt":"m/siQkLFCb5Ffgm/VWkY6w==","iv":"IgKsikgufDgJp6wS","dati":"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","iter":250000};
+  // ======================================================
+
+  const ETICHETTE = {
+    nome:"Nome", sezione:"Scuola", anni:"Anni nella scuola",
+    fragili:"I ragazzi fragili",
+    famiglie:"Quando con una famiglia ci si blocca",
+    comunicazione:"La comunicazione interna",
+    gratificazione:"Essere visti",
+    chiusura:"Per chiudere (strada / pesi)",
+    libero:"Libero", inviatoIl:"Inviato il"
+  };
+  const TEMI = ["fragili","famiglie","comunicazione","gratificazione","chiusura","libero"];
+
+  let privKey = null;
+  let relazioni = [];
+  let vista = "persona";
+
+  function b64ToBuf(b64){
+    const s = atob(String(b64).trim());
+    const b = new Uint8Array(s.length);
+    for(let i=0;i<s.length;i++) b[i] = s.charCodeAt(i);
+    return b.buffer;
+  }
+
+  // --- Sblocca la chiave privata con la password ---
+  async function sbloccaChiave(password){
+    const P = CHIAVE_PRIVATA_PROTETTA;
+    const enc = new TextEncoder();
+    const base = await crypto.subtle.importKey("raw", enc.encode(password), "PBKDF2", false, ["deriveKey"]);
+    const aes = await crypto.subtle.deriveKey(
+      {name:"PBKDF2", salt:new Uint8Array(b64ToBuf(P.salt)), iterations:P.iter||250000, hash:"SHA-256"},
+      base, {name:"AES-GCM", length:256}, false, ["decrypt"]);
+    const jwkBuf = await crypto.subtle.decrypt(
+      {name:"AES-GCM", iv:new Uint8Array(b64ToBuf(P.iv))}, aes, b64ToBuf(P.dati)); // errore = password sbagliata
+    const jwk = JSON.parse(new TextDecoder().decode(jwkBuf));
+    return crypto.subtle.importKey("jwk", jwk, {name:"RSA-OAEP", hash:"SHA-256"}, false, ["decrypt"]);
+  }
+
+  // --- Scarica le relazioni dal foglio via JSONP ---
+  function scaricaDalFoglio(){
+    return new Promise((res, rej)=>{
+      const cb = "jsonp_" + Date.now() + "_" + Math.floor(Math.random()*1e6);
+      const s = document.createElement("script");
+      let fatto = false;
+      const pulisci = ()=>{ try{ delete window[cb]; }catch(e){} s.remove(); };
+      window[cb] = (data)=>{ fatto = true; pulisci(); res(data); };
+      s.onerror = ()=>{ if(!fatto){ pulisci(); rej(new Error("connessione al foglio non riuscita")); } };
+      s.src = SCRIPT_URL + "?callback=" + cb + "&token=" + encodeURIComponent(TOKEN_LETTURA) + "&_=" + Date.now();
+      document.body.appendChild(s);
+      setTimeout(()=>{ if(!fatto){ pulisci(); rej(new Error("tempo scaduto: controlla la connessione")); } }, 20000);
+    });
+  }
+
+  async function decifraRiga(riga){
+    const rawAes = await crypto.subtle.decrypt({name:"RSA-OAEP"}, privKey, b64ToBuf(riga.chiave));
+    const aes = await crypto.subtle.importKey("raw", rawAes, {name:"AES-GCM"}, false, ["decrypt"]);
+    const iv = new Uint8Array(b64ToBuf(riga.iv));
+    const chiaro = await crypto.subtle.decrypt({name:"AES-GCM", iv}, aes, b64ToBuf(riga.dati));
+    const o = JSON.parse(new TextDecoder().decode(chiaro));
+    o.__ricevuto = riga.ricevuto;
+    return o;
+  }
+
+  async function caricaEDecifra(){
+    const risposta = await scaricaDalFoglio();
+    if(!risposta || !risposta.ok) throw new Error((risposta && risposta.errore) || "il foglio ha rifiutato la richiesta (token?)");
+    const righe = risposta.righe || [];
+    relazioni = [];
+    let saltate = 0;
+    for(const riga of righe){
+      try{ relazioni.push(await decifraRiga(riga)); }
+      catch(e){ saltate++; }
+    }
+    return {totali: righe.length, saltate};
+  }
+
+  // --- Rendering ---
+  function esc(s){ const d=document.createElement("div"); d.textContent = s==null?"":String(s); return d.innerHTML; }
+  function formattaData(iso){
+    try{ return new Date(iso).toLocaleString("it-IT",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"}); }
+    catch(e){ return iso; }
+  }
+  function riempi(id, primo, valori){
+    const sel = document.getElementById(id);
+    const attuale = sel.value;
+    sel.innerHTML = '<option value="">'+primo+'</option>';
+    valori.forEach(v => { const o = document.createElement("option"); o.value = v; o.textContent = v; sel.appendChild(o); });
+    sel.value = attuale;
+  }
+  function preparaFiltri(){
+    const sez = new Set(), ann = new Set();
+    relazioni.forEach(r => { if(r.sezione) sez.add(r.sezione); if(r.anni) ann.add(r.anni); });
+    riempi("fSezione", "Tutte le scuole", [...sez]);
+    riempi("fAnni", "Tutte le anzianità", [...ann]);
+  }
+  function filtrate(){
+    const fs = document.getElementById("fSezione").value;
+    const fa = document.getElementById("fAnni").value;
+    const q  = document.getElementById("cerca").value.trim().toLowerCase();
+    return relazioni.filter(r=>{
+      if(fs && r.sezione !== fs) return false;
+      if(fa && r.anni !== fa) return false;
+      if(q){ if(!Object.values(r).join(" ").toLowerCase().includes(q)) return false; }
+      return true;
+    });
+  }
+  function disegna(){
+    const esito = document.getElementById("esito");
+    const dati = filtrate();
+    document.getElementById("conteggio").textContent =
+      dati.length + " di " + relazioni.length + " relazioni" + (esito.dataset.note || "");
+    esito.innerHTML = "";
+    if(dati.length === 0){ esito.innerHTML = '<p class="vuoto">Nessuna relazione con questi filtri.</p>'; return; }
+    if(vista === "persona") disegnaPersona(esito, dati);
+    else disegnaTema(esito, dati);
+  }
+  function disegnaPersona(cont, dati){
+    dati.forEach(r=>{
+      const s = document.createElement("div");
+      s.className = "scheda";
+      let html = '<div class="testa"><span class="chi">' + esc(r.nome || "Senza nome") + '</span>';
+      if(r.sezione) html += '<span class="tag">' + esc(r.sezione) + '</span>';
+      if(r.anni) html += '<span class="tag oro">' + esc(r.anni) + '</span>';
+      if(r.inviatoIl) html += '<span class="quando">' + esc(formattaData(r.inviatoIl)) + '</span>';
+      html += '</div>';
+      for(const k of TEMI){
+        if(r[k] && String(r[k]).trim()){
+          html += '<div class="voce"><div class="k">' + esc(ETICHETTE[k]) + '</div><div class="t">' + esc(r[k]) + '</div></div>';
+        }
+      }
+      s.innerHTML = html;
+      cont.appendChild(s);
+    });
+  }
+  function disegnaTema(cont, dati){
+    for(const k of TEMI){
+      const conRisposta = dati.filter(r => r[k] && String(r[k]).trim());
+      if(conRisposta.length === 0) continue;
+      const blocco = document.createElement("div");
+      blocco.className = "tema-blocco";
+      let html = '<div class="titolo">' + esc(ETICHETTE[k]) + ' <span style="font-weight:400;font-size:.85rem;color:var(--tenue)">(' + conRisposta.length + ')</span></div>';
+      conRisposta.forEach(r=>{
+        const chi = [r.nome || "Senza nome", r.sezione].filter(Boolean).join(" · ");
+        html += '<div class="risposta"><div class="fonte">' + esc(chi) + '</div><div class="t">' + esc(r[k]) + '</div></div>';
+      });
+      blocco.innerHTML = html;
+      cont.appendChild(blocco);
+    }
+  }
+
+  // --- Flusso di accesso ---
+  function configMancante(){
+    if(!CHIAVE_PRIVATA_PROTETTA) return "manca la chiave protetta";
+    if(!TOKEN_LETTURA) return "manca il token di lettura";
+    if(!SCRIPT_URL) return "manca l'indirizzo del foglio";
+    return null;
+  }
+
+  function mostraConfig(){
+    const c = document.getElementById("config");
+    c.hidden = false;
+    c.innerHTML = "<strong>Configurazione incompleta.</strong> Prima di usare il cruscotto: " +
+      "1) apri <code>genera-chiavi.html</code>, proteggi la tua chiave con una password e incolla il blocco al posto di <code>const CHIAVE_PRIVATA_PROTETTA = null;</code>; " +
+      "2) scegli un token casuale e mettilo sia in <code>apps-script.gs</code> (<code>TOKEN_LETTURA</code>) sia qui (<code>const TOKEN_LETTURA</code>); " +
+      "3) ridistribuisci il Web App.";
+  }
+
+  async function entra(){
+    const msg = document.getElementById("msg");
+    const btn = document.getElementById("entra");
+    const pwd = document.getElementById("pwd").value;
+    msg.textContent = "";
+    const mancante = configMancante();
+    if(mancante){ msg.textContent = "Configurazione: " + mancante + "."; mostraConfig(); return; }
+    if(!pwd){ msg.textContent = "Inserisci la password."; return; }
+    if(!(window.crypto && crypto.subtle)){ msg.textContent = "Apri la pagina via https (o localhost)."; return; }
+    btn.disabled = true; msg.textContent = "Apertura…";
+    try{
+      privKey = await sbloccaChiave(pwd);
+    }catch(e){
+      btn.disabled = false; msg.textContent = "Password errata."; return;
+    }
+    msg.textContent = "Scarico le relazioni…";
+    try{
+      const info = await caricaEDecifra();
+      const note = [];
+      if(info.saltate) note.push(info.saltate + " riga/e non leggibili (es. prove)");
+      document.getElementById("esito").dataset.note = note.length ? " · " + note.join(" · ") : "";
+      apriDashboard();
+      if(relazioni.length === 0){
+        document.getElementById("esito").innerHTML = '<p class="vuoto">Nessuna relazione ancora ricevuta.</p>';
+        document.getElementById("conteggio").textContent = "0 relazioni" + (document.getElementById("esito").dataset.note||"");
+      }else{
+        preparaFiltri();
+        disegna();
+      }
+    }catch(e){
+      btn.disabled = false; privKey = null; msg.textContent = "Non riesco a leggere il foglio: " + e.message;
+    }
+  }
+
+  function apriDashboard(){
+    document.getElementById("accesso").style.display = "none";
+    document.getElementById("config").hidden = true;
+    document.getElementById("azioniTop").classList.add("on");
+    document.getElementById("barra").classList.add("on");
+  }
+  function esci(){
+    privKey = null; relazioni = [];
+    document.getElementById("pwd").value = "";
+    document.getElementById("entra").disabled = false;
+    document.getElementById("msg").textContent = "";
+    document.getElementById("esito").innerHTML = "";
+    document.getElementById("conteggio").textContent = "";
+    document.getElementById("azioniTop").classList.remove("on");
+    document.getElementById("barra").classList.remove("on");
+    document.getElementById("accesso").style.display = "";
+  }
+  async function aggiorna(){
+    if(!privKey) return;
+    const conteggio = document.getElementById("conteggio");
+    conteggio.textContent = "Aggiorno…";
+    try{
+      const info = await caricaEDecifra();
+      const note = [];
+      if(info.saltate) note.push(info.saltate + " riga/e non leggibili (es. prove)");
+      document.getElementById("esito").dataset.note = note.length ? " · " + note.join(" · ") : "";
+      preparaFiltri();
+      disegna();
+    }catch(e){ conteggio.textContent = "Aggiornamento non riuscito: " + e.message; }
+  }
+
+  // Eventi
+  document.getElementById("entra").addEventListener("click", entra);
+  document.getElementById("pwd").addEventListener("keydown", (e)=>{ if(e.key === "Enter") entra(); });
+  document.getElementById("esci").addEventListener("click", esci);
+  document.getElementById("aggiorna").addEventListener("click", aggiorna);
+  ["fSezione","fAnni"].forEach(id => document.getElementById(id).addEventListener("change", disegna));
+  document.getElementById("cerca").addEventListener("input", disegna);
+  document.querySelectorAll(".barra .ghost[data-vista]").forEach(b=>{
+    b.addEventListener("click", ()=>{
+      vista = b.dataset.vista;
+      document.querySelectorAll(".barra .ghost[data-vista]").forEach(x => x.classList.toggle("on", x === b));
+      disegna();
+    });
+  });
+
+  if(configMancante()) mostraConfig();
+</script>
+</body>
+</html>

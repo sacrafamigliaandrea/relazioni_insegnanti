@@ -42,25 +42,11 @@
     text-align:center;
     padding:14px 0 6px;
   }
-  .brand{
-    display:inline-flex;
-    align-items:center;
-    gap:11px;
-  }
-  .brand-mark{
-    width:40px;
-    height:40px;
-    flex:0 0 auto;
-    filter:drop-shadow(0 4px 12px rgba(22,64,85,.20));
-  }
-  .brand-name{
-    font-family:"Lexend", sans-serif;
-    font-weight:600;
-    color:var(--blu-scuro);
-    font-size:.95rem;
-    letter-spacing:.05em;
-    text-transform:uppercase;
-    line-height:1.2;
+  .logo-scuola{
+    display:block;
+    height:92px;
+    width:auto;
+    margin:0 auto 6px;
   }
   .anno{color:var(--inchiostro-tenue); font-size:.78rem; margin-top:2px;}
   h1{
@@ -277,14 +263,7 @@
   <!-- MODULO -->
   <div id="modulo">
     <header class="intestazione">
-      <div class="brand">
-        <svg class="brand-mark" viewBox="0 0 48 48" role="img" aria-label="Scuola Sacra Famiglia">
-          <rect x="3" y="3" width="42" height="42" rx="12" fill="var(--blu, #1f5673)"/>
-          <path d="M24 11 C24 11 34 24 34 31 a10 10 0 0 1 -20 0 C14 24 24 11 24 11 Z" fill="#fff"/>
-          <circle cx="20.4" cy="30.2" r="2.5" fill="var(--oro, #B8860B)"/>
-        </svg>
-        <span class="brand-name">Scuola Sacra Famiglia</span>
-      </div>
+      <img class="logo-scuola" src="logo.jpg" alt="Scuola Sacra Famiglia" />
       <div class="anno">Anno scolastico 2025 / 2026</div>
     </header>
 
@@ -332,15 +311,15 @@
     <!-- Le scene: punti di pressione reali, ognuno con le due lenti (strada / pesi) -->
     <section class="scena">
       <div class="occhiello">I ragazzi fragili</div>
-      <p class="domanda">Pensa a un bambino che ti ha messo alla prova — per fragilità, comportamento, o una situazione difficile.</p>
-      <p class="aiuto">Cosa hai potuto contare come già dato — sostegni, strumenti, il modo in cui la scuola affronta questi casi — e cosa è dipeso da te, da quello che gli hai messo accanto?</p>
+      <p class="domanda">Pensa a un bambino/a — ragazzo/a che ti ha messo alla prova — per fragilità, comportamento, o una situazione difficile.</p>
+      <p class="aiuto">Cosa hai potuto contare come già dato — sostegni, strumenti, il modo in cui la scuola affronta questi casi — e cosa è dipeso da te, da quello che hai messo accanto?</p>
       <textarea data-key="fragili" placeholder="Scrivi qui…"></textarea>
     </section>
 
     <section class="scena">
       <div class="occhiello">Quando con una famiglia ci si blocca</div>
       <p class="domanda">Ripensa a una famiglia con cui la collaborazione si è inceppata.</p>
-      <p class="aiuto">Cos'era già stabilito dalla scuola — canali, regole, il sostegno dei colleghi e di chi coordina — e cosa è dipeso da come ti sei posto tu?</p>
+      <p class="aiuto">Cos'era già stabilito dalla scuola — canali, regole, il sostegno dei colleghi e di chi coordina — e cosa è dipeso da come ti sei posto/a tu?</p>
       <textarea data-key="famiglie" placeholder="Scrivi qui…"></textarea>
     </section>
 
@@ -353,7 +332,7 @@
 
     <section class="scena">
       <div class="occhiello">Essere visti</div>
-      <p class="domanda">Quando ti sei sentito riconosciuto per il tuo lavoro? E quando hai sentito che nessuno se ne accorgeva?</p>
+      <p class="domanda">Quando ti sei sentito/a riconosciuto/a per il tuo lavoro? E quando hai sentito che nessuno se ne accorgeva?</p>
       <p class="aiuto">Cosa dipende da come la scuola riconosce l'impegno di ciascuno — e cosa da quanto tu riconosci quello degli altri?</p>
       <textarea data-key="gratificazione" placeholder="Scrivi qui…"></textarea>
     </section>
@@ -399,7 +378,7 @@
   // === Cifratura a busta: AES-256-GCM per il testo, RSA-OAEP per la chiave ===
   // Incolla qui la chiave PUBBLICA (JWK) generata con "genera-chiavi.html".
   // È pubblica: si può esporre. La chiave PRIVATA non va MAI messa qui.
-  const PUBLIC_KEY_JWK = {"alg":"RSA-OAEP-256","e":"AQAB","ext":true,"key_ops":["encrypt"],"kty":"RSA","n":"79Gl1rB2rDsUr7zEFfAuW6umx6ynnyFWqQ9Ni01IXgOsvSJ63lFFKUa6aujzeGa91mTXhUrhwk-avAboQW9_oDgDfyW2mOAqs_OGT1upqmtIcYOHMJGNB0BY-ZcdRvrfZOJpIwoicBS-9gnkkRCqSqyi2_f_zuGoaq-ehcbhXXrEXJHBxH8SZACIhtPBYrCOjc4KbxiKTltbxrt1awLrZwRnmToPtLTHNYekjsnWCaSoYNB-01nhhpoh55WQ5H6eojLeiQugOvfMWeGw48wsc26O0dGVAGmJLHyaagrfpM37gaDjkr8ejGx0Oo0yKWYfGCBmn4gtDvCw-zkWIqXMuhhzuxVJ7Huao_2Mq_iKDMtDVdtOvEimQ1doiP3uQNEOfFUstWecVTHWjqb3k6Hag52vHPVlJgcyAOJrEGNsc1F1JADEKTxkn1X1pyPpKlCFClx-6CjiyAhcN_I6744Bbbg_AzbAwcgNQMqSMlG_p2t42TqTEgBS1tH-p4wE0TNVIoBCWdrfGGDDLEcJGnNsFHtbr6SMP-OyT1V_Rn_izlgNkzGGJw02BsiDzBDd0nju9FSZXg9ip8FdtBqxGnM_rlAV-eUT44iGs7w4GH_0ZcQhSU9mUaKVWj58K6AENhiKmAh-JS9Kw8PmtJzYrK-sL9_hjZ1ANcohTHiQPUFxLj0"};
+  const PUBLIC_KEY_JWK = {"alg":"RSA-OAEP-256","e":"AQAB","ext":true,"key_ops":["encrypt"],"kty":"RSA","n":"uI-HpG2Ccx6nLP1Tbf6rRSxO1losKqi8a4Foc9xkFjr4quwl4r5q0wPnLofYbYzLma335JdohhBVO7XxS_73TjswgdS1LySiDQ8cyGHzXuLit0rEsX6ow97mfKgUyYCvN5Pv6REGpgnFy7M-bjH797-TzbUJmOosmdOa9UuPvv2JOXscS9EE4b7IYMyH0iSuWkbnl36bCmcax672CzOgLK5TFdWJY3zzT6ae6h4-0fcQT-aqy5YhKC28K8M1EnlSFiUgYQ1W_-uPzwVd0IYFT2GWRUyi4ZECYIuTKUphN3IiGvuqqdRaDi0qXmYaCH3tpcoVFXXq8A1zvtOKBfcWgguSTt-L0h0oviezSJmHp_p-JWa6bA0Iuy0iFNJUbqANvWoUowRbRFubQCZvlftN3_VCf6NH4YyCF1gqq3m7NLcmcNqNTNMio8UcdQ3EVVBK9g-TrbxEE2b1kXRHzuAG5blvw8pIjRZdGu3kT9AY7iC_DPTgbznA0HVXL6sADWoyfhJAszpJrWdDvPcDKBKfxzdxe6PZT4UmjjBUdHxDupYEPWtPCTfJFeXQl9SzyQNUgMSpBl7tec6VVi0ed-RHD0ojfLNZsktgFxHde_q3Mjv_0L07QTiY2fu1jX2Bl4Sui-lazQrUER67fNDtWWElLhOWFOjw5zJOBgBAV8lQkzE"};
 
   function bufToB64(buf){
     let s = "", b = new Uint8Array(buf);
